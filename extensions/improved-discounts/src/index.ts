@@ -32,9 +32,9 @@ extend("pos.home.tile.render", (root, api) => {
 extend("pos.home.modal.render", (root, api) => {
   //Function to apply the discounts to the cart
   const updateDiscounts = async (title: string, maxDiscount: number) => {
-    let items = api.cart.subscribable.initial.lineItems;
-    let variantIds = items.map((item) => item.variantId!);
-    let lineItemIdsQuants = items.map((item) => ({ id: item.uuid, qauntity: item.quantity }));
+    const items = api.cart.subscribable.initial.lineItems;
+    const variantIds = items.map((item) => item.variantId!);
+    const lineItemIdsQuants = items.map((item) => ({ id: item.uuid, qauntity: item.quantity }));
 
     //get variant details from Shopify Admin (need the compare-at-price)
     const response = await api.productSearch.fetchProductVariantsWithIds(variantIds);
