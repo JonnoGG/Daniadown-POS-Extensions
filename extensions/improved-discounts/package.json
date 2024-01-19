@@ -1,0 +1,10 @@
+{
+  "name": "improved-discounts",
+  "private": true,
+  "version": "1.0.0",
+  "main": "dist/main.js",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@shopify/retail-ui-extensions": "1.5.0"
+  }
+}

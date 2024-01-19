@@ -1,0 +1,8 @@
+type = "pos_ui_extension"
+name = "Daniadown Discounts"
+description = "Presets to use designer and employee discounts."
+
+extension_points = [
+  'pos.home.tile.render',
+  'pos.home.modal.render'
+]
