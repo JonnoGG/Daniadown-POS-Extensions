@@ -9,21 +9,35 @@ import {
 } from "@shopify/retail-ui-extensions";
 
 extend("pos.home.tile.render", (root, api) => {
-  const shouldEnable = (subtotal: string): boolean => {
-    return Number(subtotal) > 100;
+  const shouldEnable = (subtotal: string, customer: any): boolean => {
+    return Boolean(Number(subtotal) && customer);
+  };
+
+  const updateInstructionMsg = (subtotal: string, customer: any): string => {
+    if (Number(subtotal) && customer) {
+      return "Employee & designer discounts.";
+    } else if (Number(subtotal)) {
+      return "Employee & designer discounts.\nPlease add customer.";
+    } else if (customer) {
+      return "Employee & designer discounts.\nPlease add products.";
+    } else {
+      return "Employee & designer discounts.\nPlease add products & customer.";
+    }
   };
 
   // You can use the initial cart value to set up state
   const tile = root.createComponent(Tile, {
     title: "DD Discounts",
-    subtitle: "Employee & designer discounts",
-    enabled: shouldEnable(api.cart.subscribable.initial.subtotal),
+    subtitle: "Employee & designer discounts.\nPlease add products & customer.",
+    enabled: shouldEnable(api.cart.subscribable.initial.subtotal, api.cart.subscribable.initial.customer),
     onPress: api.smartGrid.presentModal,
   });
 
   // You can subscribe to changes in the cart to mutate state
   api.cart.subscribable.subscribe((cart) => {
-    tile.updateProps({ enabled: Number(cart.subtotal) > 0 });
+    tile.updateProps({ enabled: shouldEnable(cart.subtotal, cart.customer) });
+    tile.updateProps({ subtitle: updateInstructionMsg(cart.subtotal, cart.customer) });
+    //tile.updateProps();
   });
   root.appendChild(tile);
   root.mount();
