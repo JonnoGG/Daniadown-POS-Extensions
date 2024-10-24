@@ -13,7 +13,9 @@ extend("pos.home.tile.render", (root, api) => {
     const shouldEnable = (subtotal: string, customer: any): boolean => {
         const privilegedCustomer = Boolean;
 
-        return Boolean(Number(subtotal) && customer);
+        // always enabled during brentwood closing sale, uncomment below line when removing brentwood button
+        //return Boolean(Number(subtotal) && customer);
+        return true; //delete when brentwood sale is over
     };
 
     const updateInstructionMsg = (subtotal: string, customer: any): string => {
