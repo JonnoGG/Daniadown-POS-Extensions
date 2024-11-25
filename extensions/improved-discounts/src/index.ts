@@ -148,9 +148,9 @@ extend("pos.home.modal.render", (root, api) => {
     });
 
     const brentwoodDiscountBtn = root.createComponent(Button, {
-        title: "Brentwood Closing Sale - 20% off MSRP",
+        title: "Brentwood Closing Sale - 30% off MSRP",
         onPress: () => {
-            updateDiscounts("Closing Sale", 0.2);
+            updateDiscounts("Closing Sale", 0.3);
         },
     });
 
