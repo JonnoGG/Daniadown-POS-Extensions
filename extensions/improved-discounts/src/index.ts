@@ -11,11 +11,9 @@ import {
 
 extend("pos.home.tile.render", (root, api) => {
     const shouldEnable = (subtotal: string, customer: any): boolean => {
-        const privilegedCustomer = Boolean;
-
         // always enabled during brentwood closing sale, uncomment below line when removing brentwood button
-        //return Boolean(Number(subtotal) && customer);
-        return true; //delete when brentwood sale is over
+        return Boolean(Number(subtotal) && customer);
+        //return true; //comment out when brentwood sale is over
     };
 
     const updateInstructionMsg = (subtotal: string, customer: any): string => {
@@ -147,12 +145,12 @@ extend("pos.home.modal.render", (root, api) => {
         },
     });
 
-    const brentwoodDiscountBtn = root.createComponent(Button, {
-        title: "Brentwood Closing Sale - 30% off MSRP",
-        onPress: () => {
-            updateDiscounts("Closing Sale", 0.3);
-        },
-    });
+    // const brentwoodDiscountBtn = root.createComponent(Button, {
+    //     title: "Brentwood Closing Sale - 30% off MSRP",
+    //     onPress: () => {
+    //         updateDiscounts("Closing Sale", 0.3);
+    //     },
+    // });
 
     const buttonStack = root.createComponent(Stack, {
         direction: "vertical",
@@ -162,7 +160,8 @@ extend("pos.home.modal.render", (root, api) => {
     scrollView.appendChild(buttonStack);
     buttonStack.appendChild(designerDiscountBtn);
     buttonStack.appendChild(employeeDiscountBtn);
-    buttonStack.appendChild(brentwoodDiscountBtn);
+    // Comment out below when brentwood sale is over
+    //buttonStack.appendChild(brentwoodDiscountBtn);
     mainScreen.appendChild(scrollView);
     root.appendChild(mainScreen);
     root.mount();
