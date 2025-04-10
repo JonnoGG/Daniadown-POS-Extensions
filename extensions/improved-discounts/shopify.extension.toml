@@ -1,8 +1,16 @@
-type = "pos_ui_extension"
+api_version = "2025-04"
+
+[[extensions]]
+type = "ui_extension"
 name = "Daniadown Discounts"
+handle = "Daniadown-Discounts"
 description = "Presets to use designer and employee discounts."
 
-extension_points = [
-  'pos.home.tile.render',
-  'pos.home.modal.render'
-]
+
+[[extensions.targeting]]
+module = "./src/Tile.ts"
+target = "pos.home.tile.render"
+
+[[extensions.targeting]]
+module = "./src/Modal.ts"
+target = "pos.home.modal.render"

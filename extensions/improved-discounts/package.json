@@ -5,6 +5,6 @@
   "main": "dist/main.js",
   "license": "UNLICENSED",
   "dependencies": {
-    "@shopify/retail-ui-extensions": "1.5.0"
+    "@shopify/ui-extensions": "^2025.4"
   }
 }

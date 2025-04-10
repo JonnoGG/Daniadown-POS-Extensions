@@ -1,52 +1,7 @@
-import {
-    extend,
-    Screen,
-    Tile,
-    Button,
-    DiscountType,
-    ScrollView,
-    SetLineItemDiscountInput,
-    Stack,
-} from "@shopify/retail-ui-extensions";
+import { extension, Screen, Button, ScrollView, Stack } from "@shopify/ui-extensions/point-of-sale";
 
-extend("pos.home.tile.render", (root, api) => {
-    const shouldEnable = (subtotal: string, customer: any): boolean => {
-        // always enabled during brentwood closing sale, uncomment below line when removing brentwood button
-        return Boolean(Number(subtotal) && customer);
-        //return true; //comment out when brentwood sale is over
-    };
 
-    const updateInstructionMsg = (subtotal: string, customer: any): string => {
-        if (Number(subtotal) && customer) {
-            return "Employee & designer discounts.";
-        } else if (Number(subtotal)) {
-            return "Employee & designer discounts.\nPlease add customer.";
-        } else if (customer) {
-            return "Employee & designer discounts.\nPlease add products.";
-        } else {
-            return "Employee & designer discounts.\nPlease add products & customer.";
-        }
-    };
-
-    // You can use the initial cart value to set up state
-    const tile = root.createComponent(Tile, {
-        title: "DD Discounts",
-        subtitle: "Employee & designer discounts.\nPlease add products & customer.",
-        enabled: shouldEnable(api.cart.subscribable.initial.subtotal, api.cart.subscribable.initial.customer),
-        onPress: api.smartGrid.presentModal,
-    });
-
-    // You can subscribe to changes in the cart to mutate state
-    api.cart.subscribable.subscribe((cart) => {
-        tile.updateProps({ enabled: shouldEnable(cart.subtotal, cart.customer) });
-        tile.updateProps({ subtitle: updateInstructionMsg(cart.subtotal, cart.customer) });
-        //tile.updateProps();
-    });
-    root.appendChild(tile);
-    root.mount();
-});
-
-extend("pos.home.modal.render", (root, api) => {
+export default extension("pos.home.modal.render", (root, api) => {
     //Checks if the passed customer is a designer or employee
     const checkCustomerPrivilege = (customer: any, privilegeToCheck: string) => {
         if (customer.firstName.startsWith(privilegeToCheck)) {
@@ -124,6 +79,7 @@ extend("pos.home.modal.render", (root, api) => {
                 checkCustomerPrivilege(api.cart.subscribable.initial.customer, "DES -") ||
                 checkCustomerPrivilege(api.cart.subscribable.initial.customer, "DES-")
             ) {
+            //if (true) {
                 updateDiscounts("Designer Discount", 0.25);
             } else {
                 api.toast.show("Customer does not have designer privileges.", { duration: 3000 });
@@ -138,6 +94,7 @@ extend("pos.home.modal.render", (root, api) => {
                 checkCustomerPrivilege(api.cart.subscribable.initial.customer, "EMP -") ||
                 checkCustomerPrivilege(api.cart.subscribable.initial.customer, "EMP-")
             ) {
+            //if (true) {
                 updateDiscounts("Employee Discount", 0.3);
             } else {
                 api.toast.show("Customer does not have employee privileges.", { duration: 3000 });
@@ -153,16 +110,18 @@ extend("pos.home.modal.render", (root, api) => {
     // });
 
     const buttonStack = root.createComponent(Stack, {
-        direction: "vertical",
+        direction: "block",
+        alignContent: "stretch",
+        gap: '200',
     });
 
     //Add components to modal
-    scrollView.appendChild(buttonStack);
-    buttonStack.appendChild(designerDiscountBtn);
-    buttonStack.appendChild(employeeDiscountBtn);
+    scrollView.append(buttonStack);
+    buttonStack.append(designerDiscountBtn);
+    buttonStack.append(employeeDiscountBtn);
     // Comment out below when brentwood sale is over
     //buttonStack.appendChild(brentwoodDiscountBtn);
-    mainScreen.appendChild(scrollView);
-    root.appendChild(mainScreen);
+    mainScreen.append(scrollView);
+    root.append(mainScreen);
     root.mount();
 });
