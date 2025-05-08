@@ -75,30 +75,30 @@ export default extension("pos.home.modal.render", (root, api) => {
     const designerDiscountBtn = root.createComponent(Button, {
         title: "Designer Discount - 25% off MSRP",
         onPress: () => {
-            if (
-                checkCustomerPrivilege(api.cart.subscribable.initial.customer, "DES -") ||
-                checkCustomerPrivilege(api.cart.subscribable.initial.customer, "DES-")
-            ) {
+            // if (
+            //     checkCustomerPrivilege(api.cart.subscribable.initial.customer, "DES -") ||
+            //     checkCustomerPrivilege(api.cart.subscribable.initial.customer, "DES-")
+            // ) {
             //if (true) {
                 updateDiscounts("Designer Discount", 0.25);
-            } else {
-                api.toast.show("Customer does not have designer privileges.", { duration: 3000 });
-            }
+            // } else {
+            //     api.toast.show("Customer does not have designer privileges.", { duration: 3000 });
+            // }
         },
     });
 
     const employeeDiscountBtn = root.createComponent(Button, {
         title: "Employee Discount - 30% off MSRP",
         onPress: () => {
-            if (
-                checkCustomerPrivilege(api.cart.subscribable.initial.customer, "EMP -") ||
-                checkCustomerPrivilege(api.cart.subscribable.initial.customer, "EMP-")
-            ) {
+            // if (
+            //     checkCustomerPrivilege(api.cart.subscribable.initial.customer, "EMP -") ||
+            //     checkCustomerPrivilege(api.cart.subscribable.initial.customer, "EMP-")
+            // ) {
             //if (true) {
                 updateDiscounts("Employee Discount", 0.3);
-            } else {
-                api.toast.show("Customer does not have employee privileges.", { duration: 3000 });
-            }
+            // } else {
+            //     api.toast.show("Customer does not have employee privileges.", { duration: 3000 });
+            // }
         },
     });
 
